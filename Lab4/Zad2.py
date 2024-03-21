@@ -3,20 +3,24 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import seaborn as sns
 from scipy import optimize
+import math
 
 # Parametry rozkładu jednostajnego
-a, b = -2, 4  # zakładamy, że chcemy losować z przedziału [-2, 4]
+a, b = -1.5, 1.5  # zakładamy, że chcemy losować z przedziału [-2, 4]
+
+uniform_data = np.random.uniform(a, b, 100)
 
 # Parametry rozkładu normalnego
-mu =
-sigma =
+mu = sum(uniform_data) / len(uniform_data)
+
+sigma = sum((d - mu)**2 for d in uniform_data)/len(uniform_data)
 
 # Liczba próbek
-N = 10000
+N = 100
 
 
 # Punkty, dla których będziemy rysować funkcję gęstości rozkładu normalnego
-t = np.linspace(-3, 5, 1000)
+t = np.linspace(-5, 5, 100)
 
 
 # Rysowanie funkcji gęstości rozkładu normalnego

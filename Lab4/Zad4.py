@@ -22,6 +22,8 @@ def mle(x, mu, sigma):
     return mle
 
 
+# Zadanie 5
+
 mu1 = 0
 sigma1 = 1
 mu2 = 0
@@ -39,3 +41,25 @@ print(mle(sample, mu1, sigma1))
 print(mle(sample, mu2, sigma2))
 print(mle(sample, mu3, sigma3))
 print(mle(sample, mu4, sigma4))
+
+
+# Zadanie 6
+def f(x):
+    x1, x2 = x
+    return (x1+1)**2+(x2)**2
+
+
+x0 = np.asarray((0, 0))  # Initial guess.
+res1 = optimize.fmin_cg(f, x0)
+print(res1)
+print()
+
+# Zadanie 7
+def fmle(x):
+    return mle(x, mu1, sigma1)
+
+
+x0 = np.asarray((0, 0))  # Initial guess.
+res1 = optimize.fmin_cg(f, x0, fprime=fmle)
+print(res1)
+print()
