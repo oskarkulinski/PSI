@@ -22,4 +22,3 @@ x0 = np.asarray((0, 0))  # Initial guess.
 res1 = optimize.fmin_cg(log_likelihood, x0, args=(mu1, sigma1, tau1))
 print(res1)
 print()
-
