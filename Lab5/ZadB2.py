@@ -1,6 +1,7 @@
 import statsmodels.formula.api as smf
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 df_adv = pd.read_csv('https://raw.githubusercontent.com/przem85/bootcamp/master/statistics/Advertising.csv', index_col=0)
 df_adv.head()
@@ -17,5 +18,5 @@ print((est.summary2()))
 est = smf.ols(formula='sales ~ I(newspaper)+I(TV):I(radio)+np.log(radio+1)', data=df_adv).fit()
 print((est.summary2()))
 
-my_est = smf.ols(formula='', data=df_adv).fit()
+my_est = smf.ols(formula='sales ~ I(newspaper) + I(TV) + I(radio) + I(newspaper**2) + I(TV**2) + I(radio**2)', data=df_adv).fit()
 print((my_est.summary2()))
