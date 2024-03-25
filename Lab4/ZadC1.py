@@ -29,31 +29,70 @@ def gradient_descent_runner_1d(starting_x, learning_rate, num_iterations):
 learning_rate = 0.2
 initial_x = 5
 num_iterations = 30
-x = gradient_descent_runner_1d(initial_x, learning_rate, num_iterations)
+res = gradient_descent_runner_1d(initial_x, learning_rate, num_iterations)
 
 plt.show()
 
 
 
 lr1 = 0.001
-x = gradient_descent_runner_1d(initial_x, lr1, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr1, num_iterations)
+plt.show()
+print(res, end='\n\n')
+
 lr2 = 0.1
-x = gradient_descent_runner_1d(initial_x, lr2, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr2, num_iterations)
+plt.show()
+print(res, end='\n\n')
+
 lr3 = 0.2
-x = gradient_descent_runner_1d(initial_x, lr3, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr3, num_iterations)
+
+plt.show()
+print(res, end='\n\n')
+
 lr4 = 0.5
-x = gradient_descent_runner_1d(initial_x, lr4, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr4, num_iterations)
+
+plt.show()
+print(res, end='\n\n')
+
 lr5 = 0.9
-x = gradient_descent_runner_1d(initial_x, lr5, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr5, num_iterations)
+
+plt.show()
+print(res, end='\n\n')
+
 lr6 = 0.99
-x = gradient_descent_runner_1d(initial_x, lr6, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr6, num_iterations)
+
+plt.show()
+print(res, end='\n\n')
+
 lr7 = 0.999
-x = gradient_descent_runner_1d(initial_x, lr7, num_iterations)
-print(x, end='\n\n')
+x = np.linspace(-5, 5, 200)
+y = f(x)
+plt.plot(x, y, '--k', ms=10)
+res = gradient_descent_runner_1d(initial_x, lr7, num_iterations)
+
+plt.show()
+print(res, end='\n\n')
 
