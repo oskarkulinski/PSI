@@ -89,7 +89,7 @@ scoring = 'neg_mean_absolute_error'
 
 
 from sklearn.model_selection import GridSearchCV
-grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Ridge()),
+grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Ridge(alpha=1)),
                     param_grid={'polynomialfeatures__degree': [1, 2, 3, 4, 5, 6, 7],
                                 'ridge__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
                     cv=kfold,

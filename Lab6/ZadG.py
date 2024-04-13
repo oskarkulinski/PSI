@@ -6,17 +6,16 @@ from sklearn import linear_model
 import scipy.stats as stats
 from sklearn.linear_model import Ridge
 from sklearn.linear_model import Lasso
+from sklearn.linear_model import ElasticNet
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 from sklearn import model_selection
-
 
 true_fun = lambda X: np.cos(1.5 * np.pi * X)
 n_samples=20
 x = np.sort(np.random.rand(n_samples))
 y = true_fun(x) + np.random.randn(n_samples) * 0.1
 x=np.vstack(x)
-
 
 
 clf = Lasso(alpha=1.0)
@@ -26,7 +25,6 @@ x_plot = np.vstack(np.linspace(0, 1, 20))
 plt.plot(x_plot, clf.predict(x_plot), color='blue',linewidth=3)
 plt.plot(x, y, 'ok');
 plt.show()
-
 
 
 # prepare models
@@ -52,16 +50,16 @@ for i in range(len(models)):
 plt.legend()
 plt.show()
 
-# Zadanie 1
-# =====================================================
 
+# Zadanie 1
+# =======================================================
 models = []
 predicts = []
 names=[]
 models.append(('Linear 20', make_pipeline(PolynomialFeatures(20), linear_model.LinearRegression()) ))
-models.append(('Lasso 20 1', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=1))))
-models.append(('Lasso 20 10 000', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=10000))))
-models.append(('Lasso 20 0.0001', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=0.0001))))
+models.append(('Lasso 20 1', make_pipeline(PolynomialFeatures(20), linear_model.ElasticNet(alpha=1))))
+models.append(('Lasso 20 10 000', make_pipeline(PolynomialFeatures(20), linear_model.ElasticNet(alpha=10000))))
+models.append(('Lasso 20 0.0001', make_pipeline(PolynomialFeatures(20), linear_model.ElasticNet(alpha=0.0001))))
 
 
 for name, model in models:
@@ -92,9 +90,9 @@ scoring = 'neg_mean_absolute_error'
 
 
 from sklearn.model_selection import GridSearchCV
-grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Lasso(alpha=1)),
+grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.ElasticNet(alpha=1)),
                     param_grid={'polynomialfeatures__degree': [1, 2, 3, 4, 5, 6, 7],
-                                'lasso__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
+                                'elasticnet__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
                     cv=kfold,
                     refit=False)
 #make_pipeline(PolynomialFeatures(degree=2), linear_model.LinearRegression()).get_params().keys()
@@ -112,9 +110,9 @@ y = df_adv['sales']
 df_adv.head()
 
 
-grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Lasso(alpha=1)),
+grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.ElasticNet(alpha=1)),
                     param_grid={'polynomialfeatures__degree': [1, 2, 3, 4, 5, 6, 7],
-                                'lasso__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
+                                'elasticnet__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
                     cv=kfold,
                     refit=False)
 #make_pipeline(PolynomialFeatures(degree=2), linear_model.LinearRegression()).get_params().keys()
@@ -124,6 +122,6 @@ from sklearn.metrics import r2_score
 
 model = make_pipeline(PolynomialFeatures(
     grid.best_params_['polynomialfeatures__degree']),
-    Lasso(alpha=grid.best_params_['lasso__alpha']))
+    Lasso(alpha=grid.best_params_['elasticnet__alpha']))
 model.fit(X,y)
 print(r2_score(y, model.predict(X)))
