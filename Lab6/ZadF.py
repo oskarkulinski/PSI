@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn import linear_model
 import scipy.stats as stats
 from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 from sklearn import model_selection
@@ -17,7 +18,8 @@ y = true_fun(x) + np.random.randn(n_samples) * 0.1
 x=np.vstack(x)
 
 
-clf = Ridge(alpha=1.0)
+
+clf = Lasso(alpha=1.0)
 clf.fit(x, y)
 
 x_plot = np.vstack(np.linspace(0, 1, 20))
@@ -40,8 +42,7 @@ for name, model in models:
     model.fit(x, y)
     predicts.append(model.predict(x_plot))
     names.append(name)
-print()
-x_plot = np.vstack(np.linspace(-3, 3, 1000))
+
 plt.plot(x, y, 'ok');
 for i in range(len(models)):
     #print(i)
@@ -57,10 +58,10 @@ plt.show()
 models = []
 predicts = []
 names=[]
-models.append(('LR 20', make_pipeline(PolynomialFeatures(20), linear_model.Ridge()) ))
-models.append(('RR 20 1', make_pipeline(PolynomialFeatures(20), linear_model.Ridge(alpha=1))))
-models.append(('RR 20 10000', make_pipeline(PolynomialFeatures(20), linear_model.Ridge(alpha=10000))))
-models.append(('RR 20 0.0001', make_pipeline(PolynomialFeatures(20), linear_model.Ridge(alpha=0.0001))))
+models.append(('Linear 20', make_pipeline(PolynomialFeatures(20), linear_model.LinearRegression()) ))
+models.append(('Lasso 20 1', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=1))))
+models.append(('Lasso 20 10 000', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=10000))))
+models.append(('Lasso 20 0.0001', make_pipeline(PolynomialFeatures(20), linear_model.Lasso(alpha=0.0001))))
 
 
 for name, model in models:
@@ -69,6 +70,7 @@ for name, model in models:
     predicts.append(model.predict(x_plot))
     names.append(name)
 print()
+
 x_plot = np.vstack(np.linspace(-3, 3, 1000))
 plt.plot(x, y, 'ok');
 for i in range(len(models)):
@@ -78,6 +80,7 @@ for i in range(len(models)):
     plt.ylim((-2, 2))
 plt.legend()
 plt.show()
+
 
 # Zadanie 2
 # ===================================================
@@ -89,14 +92,15 @@ scoring = 'neg_mean_absolute_error'
 
 
 from sklearn.model_selection import GridSearchCV
-grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Ridge()),
+grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Lasso()),
                     param_grid={'polynomialfeatures__degree': [1, 2, 3, 4, 5, 6, 7],
-                                'ridge__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
+                                'lasso__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
                     cv=kfold,
                     refit=False)
 #make_pipeline(PolynomialFeatures(degree=2), linear_model.LinearRegression()).get_params().keys()
 grid.fit(x, y)
 print(grid.best_params_)
+
 
 # Zadanie 3
 # ================================================
@@ -108,9 +112,9 @@ y = df_adv['sales']
 df_adv.head()
 
 
-grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Ridge(alpha=1)),
+grid = GridSearchCV(make_pipeline(PolynomialFeatures(degree=2), linear_model.Lasso(alpha=1)),
                     param_grid={'polynomialfeatures__degree': [1, 2, 3, 4, 5, 6, 7],
-                                'ridge__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
+                                'lasso__alpha': [0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100 ]},
                     cv=kfold,
                     refit=False)
 #make_pipeline(PolynomialFeatures(degree=2), linear_model.LinearRegression()).get_params().keys()
@@ -120,6 +124,6 @@ from sklearn.metrics import r2_score
 
 model = make_pipeline(PolynomialFeatures(
     grid.best_params_['polynomialfeatures__degree']),
-    Ridge(alpha=grid.best_params_['ridge__alpha']))
+    Lasso(alpha=grid.best_params_['lasso__alpha']))
 model.fit(X,y)
 print(r2_score(y, model.predict(X)))
