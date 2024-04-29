@@ -38,10 +38,13 @@ log_reg_3.fit(X_train, y_train)
 
 y_proba_3 = log_reg_3.predict_proba(X_test)
 
-
+# coefficients
 print(log_reg_1.coef_)
 print(log_reg_2.coef_)
 print(log_reg_3.coef_)
+
+
+# All plotted
 
 plt.figure(figsize=(10,6))
 plt.scatter(np.arange(1, len(log_reg_1.coef_[0]) + 1), log_reg_1.coef_[0], label='1')

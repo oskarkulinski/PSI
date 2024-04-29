@@ -6,3 +6,4 @@ data
 *.ipynb
 .fleet
 __pycache__/
+**/*.dot
