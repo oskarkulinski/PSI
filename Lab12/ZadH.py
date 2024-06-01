@@ -1,4 +1,5 @@
 import tensorflow as tf
+from keras_preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 
 import numpy as np
@@ -27,9 +28,8 @@ inc.summary()
 
 h,w = 32, 32
 model = VGG16(weights='imagenet',include_top=False,input_shape=(h,w,3))
-model.summary()
 
-len(model.layers)
+model.summary()
 
 h,w = 32, 32
 model = VGG16(weights='imagenet',include_top=False,input_shape=(h,w,3))
@@ -46,7 +46,6 @@ model_transfer.add(top_model)
 model_transfer.layers[0].trainable = False
 
 model_transfer.summary()
-
 
 from keras.datasets import cifar10
 # from scipy.misc import toimage
@@ -67,10 +66,18 @@ print(X_test.shape)
 print(np.unique(y_train,return_counts=True))
 print(X_train[0].shape)
 
+
 # normalize inputs from 0-255 to 0.0-1.0
 
 X_train = X_train/255
 X_test = X_test/255
+
+datagen = ImageDataGenerator(horizontal_flip=True,
+                             vertical_flip=True,
+                             rotation_range=90,
+                             zoom_range=[]
+                             brightness_range=[0.1, 1.5])
+it = datagen.flow(X_train, batch_size=32)
 
 # one hot encode outputs
 y_train = keras.utils.to_categorical(y_train)
@@ -78,14 +85,7 @@ y_test = keras.utils.to_categorical(y_test)
 
 num_classes = y_test.shape[1]
 
-model_transfer.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-history = model_transfer.fit(X_train, y_train)
+model_transfer.compile(optimizer="adam",
+                       loss="categorical_crossentropy", metrics=["accuracy"])
 
-print(model_transfer.evaluate(X_test, y_test))
-
-plt.plot(history.history['accuracy'], label="accuracy")
-plt.plot(history.history['loss'], label="loss")
-
-plt.legend()
-plt.show()
-
+model.fit()
