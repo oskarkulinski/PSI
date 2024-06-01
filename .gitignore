@@ -7,3 +7,9 @@ data
 .fleet
 __pycache__/
 **/*.dot
+adult
+my_logs
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
