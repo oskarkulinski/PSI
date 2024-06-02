@@ -52,55 +52,31 @@ pyplot.show()
 
 ### VERTICAL SHIFT
 
-# example of vertical shift image augmentation
-# load the image
 img = load_img('kojot.png')
-# convert to numpy array
 data = img_to_array(img)
-# expand dimension to one sample
 samples = expand_dims(data, 0)
-# create image data augmentation generator
 datagen = ImageDataGenerator(height_shift_range=0.5)
-# prepare iterator
 it = datagen.flow(samples, batch_size=1)
-# generate samples and plot
 for i in range(9):
-    # define subplot
     pyplot.subplot(330 + 1 + i)
-    # generate batch of images
     batch = it.next()
-    # convert to unsigned integers for viewing
     image = batch[0].astype('uint8')
-    # plot raw pixel data
     pyplot.imshow(image)
-# show the figure
 pyplot.show()
 
 
 ### VERTICAL FLIP
 
-# example of vertical shift image augmentation
-# load the image
 img = load_img('kojot.png')
-# convert to numpy array
 data = img_to_array(img)
-# expand dimension to one sample
 samples = expand_dims(data, 0)
-# create image data augmentation generator
 datagen = ImageDataGenerator(vertical_flip=True)
-# prepare iterator
 it = datagen.flow(samples, batch_size=1)
-# generate samples and plot
 for i in range(9):
-    # define subplot
     pyplot.subplot(330 + 1 + i)
-    # generate batch of images
     batch = it.next()
-    # convert to unsigned integers for viewing
     image = batch[0].astype('uint8')
-    # plot raw pixel data
     pyplot.imshow(image)
-# show the figure
 pyplot.show()
 
 ### HORIZONTAL FLIP
@@ -109,71 +85,53 @@ img = load_img('kojot.png')
 data = img_to_array(img)
 samples = expand_dims(data, 0)
 datagen = ImageDataGenerator(horizontal_flip=True)
-# prepare iterator
 it = datagen.flow(samples, batch_size=1)
-# generate samples and plot
 for i in range(9):
-    # define subplot
     pyplot.subplot(330 + 1 + i)
-    # generate batch of images
     batch = it.next()
-    # convert to unsigned integers for viewing
     image = batch[0].astype('uint8')
-    # plot raw pixel data
     pyplot.imshow(image)
-# show the figure
 pyplot.show()
 
 
 ### ROTATION
 
-# example of vertical shift image augmentation
-# load the image
 img = load_img('kojot.png')
-# convert to numpy array
 data = img_to_array(img)
-# expand dimension to one sample
 samples = expand_dims(data, 0)
-# create image data augmentation generator
 datagen = ImageDataGenerator(rotation_range=90)
-# prepare iterator
 it = datagen.flow(samples, batch_size=1)
-# generate samples and plot
 for i in range(9):
-    # define subplot
     pyplot.subplot(330 + 1 + i)
-    # generate batch of images
     batch = it.next()
-    # convert to unsigned integers for viewing
     image = batch[0].astype('uint8')
-    # plot raw pixel data
     pyplot.imshow(image)
-# show the figure
 pyplot.show()
 
 ### BRIGHTNESS
 
-# example of vertical shift image augmentation
-# load the image
 img = load_img('kojot.png')
-# convert to numpy array
 data = img_to_array(img)
-# expand dimension to one sample
 samples = expand_dims(data, 0)
-# create image data augmentation generator
 datagen = ImageDataGenerator(brightness_range=[0.1, 1.5])
-# prepare iterator
 it = datagen.flow(samples, batch_size=1)
-# generate samples and plot
 for i in range(9):
-    # define subplot
     pyplot.subplot(330 + 1 + i)
-    # generate batch of images
     batch = it.next()
-    # convert to unsigned integers for viewing
     image = batch[0].astype('uint8')
-    # plot raw pixel data
     pyplot.imshow(image)
-# show the figure
 pyplot.show()
 
+### ZOOM
+
+img = load_img('kojot.png')
+data = img_to_array(img)
+samples = expand_dims(data, 0)
+datagen = ImageDataGenerator(zoom_range=[0.5, 1.2])
+it = datagen.flow(samples, batch_size=1)
+for i in range(9):
+    pyplot.subplot(330 + 1 + i)
+    batch = it.next()
+    image = batch[0].astype('uint8')
+    pyplot.imshow(image)
+pyplot.show()

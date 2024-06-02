@@ -1,5 +1,5 @@
 import tensorflow as tf
-from keras_preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import ImageDataGenerator
 from tensorflow import keras
 
 import numpy as np
@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-from keras.models import Sequential
+from keras.models import Seqeuntial
 from keras.layers import Dense
 from keras.callbacks import LearningRateScheduler
 from keras.callbacks import ModelCheckpoint
@@ -74,8 +74,10 @@ X_test = X_test/255
 
 datagen = ImageDataGenerator(horizontal_flip=True,
                              vertical_flip=True,
+                             width_shift_range=0.2,
+                             height_shift_range=0.2,
                              rotation_range=90,
-                             zoom_range=[]
+                             zoom_range=[0.5, 1.0],
                              brightness_range=[0.1, 1.5])
 it = datagen.flow(X_train, batch_size=32)
 
@@ -88,4 +90,6 @@ num_classes = y_test.shape[1]
 model_transfer.compile(optimizer="adam",
                        loss="categorical_crossentropy", metrics=["accuracy"])
 
-model.fit()
+model_transfer.fit(datagen.flow(X_train, y_train, batch_size=32), epochs=10, batch_size=32, validation_split=0.2)
+
+print(model_transfer.evaluate(X_test, y_test))
